@@ -1,11 +1,23 @@
 <div class="form-wrapper">
   <h1>Sign in</h1>
   <form action="">
-    <label for="">username</label>
-    <input type="text" />
+    <label for="username">username</label>
+    <input
+      id="username"
+      name="username"
+      type="text"
+      [ngModel]="username"
+      (ngModelChange)="changeUsername($event)"
+    />
 
-    <label for="">password</label>
-    <input type="text" />
+    <label for="password">password</label>
+    <input
+      id=""
+      name="password"
+      type="text"
+      [ngModel]="password"
+      (ngModelChange)="changePassword($event)"
+    />
 
     <div class="button-wrapper">
       <button type="reset">Clear</button>

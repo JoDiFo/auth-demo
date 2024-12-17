@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-profile-popup',
@@ -6,8 +6,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./profile-popup.component.css']
 })
 export class ProfilePopupComponent implements OnInit {
-  username: string = ""
-  password: string = ""
+  @Input() username: string = ""
+  @Input() password: string = ""
 
   constructor() { }
 

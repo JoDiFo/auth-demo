@@ -1,21 +1,35 @@
 <div class="form-wrapper">
   <h1>Product form</h1>
   <form action="">
-    <label for="">Product name</label>
-    <input type="text" />
+    <label for="productName">Product name</label>
+    <input
+      id="productName"
+      name="productName"
+      type="text"
+      [(ngModel)]="productName"
+    />
 
-    <label for="">Product price</label>
-    <input type="text" />
+    <label for="productPrice">Product price</label>
+    <input
+      id="productPrice"
+      name="productPrice"
+      type="text"
+      [(ngModel)]="productPrice"
+    />
 
-    <label for="">Product type</label>
-    <select name="" id="">
+    <label for="productType">Product type</label>
+    <select name="productType" id="productType" [(ngModel)]="productType">
       <option value="toy">Toy</option>
       <option value="weapon">Weapon</option>
       <option value="food">Food</option>
     </select>
 
-    <label for="">Product description</label>
-    <textarea></textarea>
+    <label for="productDescription">Product description</label>
+    <textarea
+      id="productDescription"
+      name="productDescription"
+      [(ngModel)]="productDescription"
+    ></textarea>
 
     <div class="button-wrapper">
       <button type="reset">Clear</button>

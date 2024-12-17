@@ -6,6 +6,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./product-form.component.css'],
 })
 export class ProductFormComponent implements OnInit {
+  productName: string = '';
+  productPrice: string = '';
+  productType: string = '';
+  productDescription: string = '';
+
   constructor() {}
 
   ngOnInit(): void {}
