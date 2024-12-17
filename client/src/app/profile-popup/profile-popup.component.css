@@ -1,0 +1,23 @@
+.wrapper {
+  position: fixed;
+  top: 40px;
+  right: 60px;
+  width: 400px;
+  border: 1px solid #252528;
+  border-radius: 10px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  box-shadow: 0 0 5px 0 #252528;
+}
+
+.wrapper div {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+p {
+  flex-grow: 1;
+}
