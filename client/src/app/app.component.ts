@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
-import {FormComponent} from "./form/form.component"
+import { ProductFormComponent } from './product-form/product-form.component';
+import { AuthFormComponent } from './auth-form/auth-form.component';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
-  providers: [FormComponent]
+  providers: [ProductFormComponent, AuthFormComponent],
 })
 export class AppComponent {
   title = 'client';
