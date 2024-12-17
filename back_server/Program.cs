@@ -10,32 +10,53 @@ using Microsoft.EntityFrameworkCore;
 using System.Text;
 using System;
 
-/*
-var connection = " "; // адрес строки подключения
-
-var builder = WebApplication.CreateBuilder(args);
-builder.Services.AddControllersWithViews();
-builder.Services.builder.Services.AddDbContext<DBContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString(connection)));*/
-
 public static void Main()
 {
-    var optionsBuilder = new DbContextOptionsBuilder<DBContext>();
-    optionsBuilder.UseSqlServer("");
+    var builder = Microsoft.AspNetCore.Builder.WebApplication.CreateBuilder();
 
-    using (var content = new DBContext(optionsBuilder.Options))
-    {
-        while (true)
+    builder.Services.AddAuthorization();
+    builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+        .AddJwtBearer(options =>
         {
-            var sendingEmails = content.Users
-                .Where(ev => !ev.IsSent)
-                .ToList();
+            options.TokenValidationParameters = new TokenValidationParameters
+            {
+                // указывает, будет ли валидироваться издатель при валидации токена
+                ValidateIssuer = true,
+                // строка, представляющая издателя
+                ValidIssuer = AuthOptions.ISSUER,
+                // будет ли валидироваться потребитель токена
+                ValidateAudience = true,
+                // установка потребителя токена
+                ValidAudience = AuthOptions.AUDIENCE,
+                // будет ли валидироваться время существования
+                ValidateLifetime = true,
+                // установка ключа безопасности
+                IssuerSigningKey = AuthOptions.GetSymmetricSecurityKey(),
+                // валидация ключа безопасности
+                ValidateIssuerSigningKey = true,
+            };
+        });
+    var app = builder.Build();
 
-            content.SaveChanges();
-            Thread.Sleep(30000);
-        }
-    }
-    Console.ReadKey();
+    app.UseAuthentication();
+    app.UseAuthorization();
+
+    app.Map("/login/{username}", (string username) =>
+    {
+        var claims = new List<Claim> { new Claim(ClaimTypes.Name, username) };
+        var jwt = new JwtSecurityToken(
+                issuer: AuthOptions.ISSUER,
+                audience: AuthOptions.AUDIENCE,
+                claims: claims,
+                expires: DateTime.UtcNow.Add(TimeSpan.FromMinutes(2)),
+                signingCredentials: new SigningCredentials(AuthOptions.GetSymmetricSecurityKey(), SecurityAlgorithms.HmacSha256));
+
+        return new JwtSecurityTokenHandler().WriteToken(jwt);
+    });
+
+    app.Map("/data", [Authorize] () => new { message = "Hello!" });
+
+    app.Run();
 }
-
 
 
