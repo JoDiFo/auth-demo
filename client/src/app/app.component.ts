@@ -10,5 +10,6 @@ import { ProfilePopupComponent } from './profile-popup/profile-popup.component';
   providers: [ProductFormComponent, AuthFormComponent, ProfilePopupComponent],
 })
 export class AppComponent {
-  title = 'client';
+  username: string = '';
+  password: string = '';
 }
