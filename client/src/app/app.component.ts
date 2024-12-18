@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { ProductFormComponent } from './product-form/product-form.component';
 import { AuthFormComponent } from './auth-form/auth-form.component';
 import { ProfilePopupComponent } from './profile-popup/profile-popup.component';
+import { IUser } from './User';
 
 @Component({
   selector: 'app-root',
@@ -10,6 +11,9 @@ import { ProfilePopupComponent } from './profile-popup/profile-popup.component';
   providers: [ProductFormComponent, AuthFormComponent, ProfilePopupComponent],
 })
 export class AppComponent {
-  username: string = '';
-  password: string = '';
+  user: IUser = {username: "", password: ""}
+
+  handleSubmitUser(user: IUser) {
+    this.user = user
+  }
 }

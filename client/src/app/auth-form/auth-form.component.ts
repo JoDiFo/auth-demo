@@ -1,5 +1,6 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { IUser } from '../User';
 
 @Component({
   selector: 'app-auth-form',
@@ -7,25 +8,21 @@ import { FormsModule } from '@angular/forms';
   styleUrls: ['./auth-form.component.css'],
 })
 export class AuthFormComponent implements OnInit {
-  @Input() username!: string
-  @Input() password!: string
+  username: string = '';
+  password: string = '';
 
-  @Output() usernameChange = new EventEmitter()
-  @Output() passwordChange = new EventEmitter()
+  @Output() submitUser = new EventEmitter();
 
-  changeUsername(value: string) {
-    this.username = value
-    this.usernameChange.emit(this.username)
+  handleSubmit() {
+    const user: IUser = {
+      username: this.username,
+      password: this.password,
+    };
+
+    this.submitUser.emit(user);
   }
 
-  changePassword(value: string) {
-    this.password = value
-    this.passwordChange.emit(this.password)
-  }
+  constructor() {}
 
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 }
