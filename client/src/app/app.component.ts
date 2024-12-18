@@ -11,9 +11,13 @@ import { IUser } from './User';
   providers: [ProductFormComponent, AuthFormComponent, ProfilePopupComponent],
 })
 export class AppComponent {
-  user: IUser = {username: "", password: ""}
+  user: IUser | null = null;
+
+  handleLogout() {
+    this.user = null
+  }
 
   handleSubmitUser(user: IUser) {
-    this.user = user
+    this.user = user;
   }
 }

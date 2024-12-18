@@ -1,8 +1,8 @@
 <app-product-form></app-product-form>
 <app-auth-form (submitUser)="handleSubmitUser($event)"></app-auth-form>
 <app-profile-popup
-  [username]="user.username"
-  [password]="user.password"
+  [user]="user"
+  (onLogout)="handleLogout()"
 ></app-profile-popup>
 
 <router-outlet></router-outlet>

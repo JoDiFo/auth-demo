@@ -1,17 +1,21 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { IUser } from '../User';
 
 @Component({
   selector: 'app-profile-popup',
   templateUrl: './profile-popup.component.html',
-  styleUrls: ['./profile-popup.component.css']
+  styleUrls: ['./profile-popup.component.css'],
 })
 export class ProfilePopupComponent implements OnInit {
-  @Input() username: string = ""
-  @Input() password: string = ""
+  @Input() user!: IUser | null;
 
-  constructor() { }
+  @Output() onLogout = new EventEmitter();
 
-  ngOnInit(): void {
+  handleClick() {
+    this.onLogout.emit();
   }
 
+  constructor() {}
+
+  ngOnInit(): void {}
 }

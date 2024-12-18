@@ -1,5 +1,4 @@
-import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { IUser } from '../User';
 
 @Component({
@@ -18,6 +17,9 @@ export class AuthFormComponent implements OnInit {
       username: this.username,
       password: this.password,
     };
+
+    this.username = '';
+    this.password = '';
 
     this.submitUser.emit(user);
   }

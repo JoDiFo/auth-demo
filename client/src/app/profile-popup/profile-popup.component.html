@@ -1,13 +1,18 @@
-<div class="wrapper">
+<div *ngIf="user" class="wrapper">
   <h2>Profile</h2>
 
   <div>
     <p>username</p>
-    <p>{{ username }}</p>
+    <p>{{ user.username }}</p>
   </div>
 
   <div>
     <p>password</p>
-    <p>{{ password }}</p>
+    <p>{{ user.password }}</p>
   </div>
+
+  <button (click)="handleClick()">Logout</button>
+</div>
+<div *ngIf="!user" class="wrapper">
+  <h2>You are logged out</h2>
 </div>
