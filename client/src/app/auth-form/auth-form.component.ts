@@ -19,8 +19,7 @@ export class AuthFormComponent implements OnInit {
       return;
     }
 
-    const user: IUser = {
-      id: 0,
+    const user: Omit<IUser, "id"> = {
       name: this.username,
       password: this.password,
       description: 'some',
@@ -56,8 +55,7 @@ export class AuthFormComponent implements OnInit {
       return;
     }
 
-    const user: IUser = {
-      id: 0,
+    const user: Omit<IUser, "id"> = {
       name: this.username,
       password: this.password,
       description: 'some',
