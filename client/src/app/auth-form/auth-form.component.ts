@@ -1,6 +1,8 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { IUser } from '../User';
 
+const SERVER_URL = "http://192.168.5.32:5000"
+
 @Component({
   selector: 'app-auth-form',
   templateUrl: './auth-form.component.html',
@@ -30,7 +32,7 @@ export class AuthFormComponent implements OnInit {
 
     this.isLoading = true;
 
-    fetch('http://192.168.5.32:5433/api/Auth/Login', {
+    fetch(SERVER_URL + '/api/Auth/Login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json;charset=utf-8',
@@ -66,7 +68,7 @@ export class AuthFormComponent implements OnInit {
 
     this.isLoading = true;
 
-    fetch('http://192.168.5.32:5433/api/Registration/Registration', {
+    fetch(SERVER_URL + '/api/Registration/Registration', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json;charset=utf-8',
