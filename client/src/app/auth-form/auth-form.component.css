@@ -3,6 +3,7 @@ div.form-wrapper {
   width: 600px;
   position: relative;
   z-index: 2;
+  background-color: #fff;
 }
 
 div.background {
@@ -22,7 +23,6 @@ form {
   border: 1px solid #252528;
   padding: 20px;
   border-radius: 10px;
-  background-color: #fff;
 }
 
 .button-wrapper {

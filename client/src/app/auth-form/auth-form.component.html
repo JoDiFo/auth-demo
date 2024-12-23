@@ -1,7 +1,7 @@
 <div class="background">
   <div class="form-wrapper">
     <h1>Sign in</h1>
-    <form action="" *ngIf="!isLoading" (ngSubmit)="handleSubmit()">
+    <form action="" *ngIf="!isLoading" (ngSubmit)="handleLogin()">
       <label for="username">username</label>
       <input id="username" name="username" type="text" [(ngModel)]="username" />
 
@@ -11,6 +11,22 @@
       <div class="button-wrapper">
         <button type="reset">Clear</button>
         <button type="submit">Sign in</button>
+      </div>
+    </form>
+    <div *ngIf="isLoading">Loading...</div>
+  </div>
+  <div class="form-wrapper">
+    <h1>Sign up</h1>
+    <form action="" *ngIf="!isLoading" (ngSubmit)="handleRegister()">
+      <label for="username">username</label>
+      <input id="username" name="username" type="text" [(ngModel)]="username" />
+
+      <label for="password">password</label>
+      <input id="" name="password" type="text" [(ngModel)]="password" />
+
+      <div class="button-wrapper">
+        <button type="reset">Clear</button>
+        <button type="submit">Sign up</button>
       </div>
     </form>
     <div *ngIf="isLoading">Loading...</div>
