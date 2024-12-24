@@ -4,3 +4,7 @@ export interface IUser {
   password: string;
   description: string;
 }
+
+export interface IResponse {
+  token: string
+}

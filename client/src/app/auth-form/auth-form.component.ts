@@ -1,7 +1,6 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { IUser } from '../User';
-
-const SERVER_URL = "http://192.168.5.32:5000"
+import { IUser } from '../types';
+import { SERVER_URL } from '../constants';
 
 @Component({
   selector: 'app-auth-form',
@@ -21,7 +20,7 @@ export class AuthFormComponent implements OnInit {
       return;
     }
 
-    const user: Omit<IUser, "id"> = {
+    const user: Omit<IUser, 'id'> = {
       name: this.username,
       password: this.password,
       description: 'some',
@@ -38,18 +37,17 @@ export class AuthFormComponent implements OnInit {
         'Content-Type': 'application/json;charset=utf-8',
       },
       body: JSON.stringify(user),
-    }).then((res) => {
-      console.log(res);
-
-      this.isLoading = false;
-
-      if (res.status < 400) {
+    })
+      .then((res) => {
         this.submitUser.emit(user);
-      } else {
-        console.error('some error');
-      }
-      return res.json()
-    }).then(console.log);
+
+        return res.json();
+      })
+      .then(console.log)
+      .catch(console.error)
+      .finally(() => {
+        this.isLoading = false;
+      });
   }
 
   handleRegister() {
@@ -57,7 +55,7 @@ export class AuthFormComponent implements OnInit {
       return;
     }
 
-    const user: Omit<IUser, "id"> = {
+    const user: Omit<IUser, 'id'> = {
       name: this.username,
       password: this.password,
       description: 'some',
@@ -74,18 +72,17 @@ export class AuthFormComponent implements OnInit {
         'Content-Type': 'application/json;charset=utf-8',
       },
       body: JSON.stringify(user),
-    }).then((res) => {
-      console.log(res);
-
-      this.isLoading = false;
-
-      if (res.status < 400) {
+    })
+      .then((res) => {
         this.submitUser.emit(user);
-      } else {
-        console.error('some error');
-      }
-      return res.json()
-    }).then(console.log);
+
+        return res.json();
+      })
+      .then(console.log)
+      .catch(console.error)
+      .finally(() => {
+        this.isLoading = false;
+      });
   }
 
   constructor() {}

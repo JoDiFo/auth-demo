@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { ProductFormComponent } from './product-form/product-form.component';
 import { AuthFormComponent } from './auth-form/auth-form.component';
 import { ProfilePopupComponent } from './profile-popup/profile-popup.component';
-import { IUser } from './User';
+import { IUser } from './types';
 
 const LOGOUT_TIMEOUT = 7000;
 
@@ -23,13 +23,13 @@ export class AppComponent {
   handleSubmitUser(user: IUser) {
     this.user = user;
 
-    this.startLogoutTimer();
+    // this.startLogoutTimer();
   }
 
   onUserAction() {
     if (this.logoutId) {
       clearTimeout(this.logoutId);
-      this.startLogoutTimer();
+      // this.startLogoutTimer();
     }
   }
 

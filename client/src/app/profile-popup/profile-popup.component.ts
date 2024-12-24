@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { IUser } from '../User';
+import { IUser } from '../types';
+import { SERVER_URL } from '../constants';
 
 @Component({
   selector: 'app-profile-popup',
@@ -12,7 +13,19 @@ export class ProfilePopupComponent implements OnInit {
   @Output() onLogout = new EventEmitter();
 
   handleClick() {
-    this.onLogout.emit();
+    fetch(SERVER_URL + '/api/Auth/Logout', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json;charset=utf-8',
+      },
+    })
+      .then((res) => {
+        this.onLogout.emit();
+
+        return res.json();
+      })
+      .then(console.log)
+      .catch(console.error);
   }
 
   constructor() {}
