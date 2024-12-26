@@ -1,6 +1,7 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { IUser } from '../types';
+import { IResponse, IUser } from '../types';
 import { SERVER_URL } from '../constants';
+import { jwtDecode } from 'jwt-decode';
 
 @Component({
   selector: 'app-auth-form',
@@ -38,12 +39,15 @@ export class AuthFormComponent implements OnInit {
       },
       body: JSON.stringify(user),
     })
-      .then((res) => {
-        this.submitUser.emit(user);
+      .then((res) => res.json())
+      .then((data: IResponse) => {
+        console.log(data);
 
-        return res.json();
+        const token = jwtDecode(data.token);
+        console.log('token', token);
+
+        this.submitUser.emit({ token, user });
       })
-      .then(console.log)
       .catch(console.error)
       .finally(() => {
         this.isLoading = false;
@@ -73,12 +77,15 @@ export class AuthFormComponent implements OnInit {
       },
       body: JSON.stringify(user),
     })
-      .then((res) => {
-        this.submitUser.emit(user);
+      .then((res) => res.json())
+      .then((data: IResponse) => {
+        console.log(data);
 
-        return res.json();
+        const token = jwtDecode(data.token);
+        console.log('token', token);
+
+        this.submitUser.emit({ token, user });
       })
-      .then(console.log)
       .catch(console.error)
       .finally(() => {
         this.isLoading = false;
