@@ -3,10 +3,8 @@ import { ProductFormComponent } from './product-form/product-form.component';
 import { AuthFormComponent } from './auth-form/auth-form.component';
 import { ProfilePopupComponent } from './profile-popup/profile-popup.component';
 import { IResponse, IUser } from './types';
-import { JwtPayload } from 'jwt-decode';
+import { jwtDecode, JwtPayload } from 'jwt-decode';
 import { SERVER_URL } from './constants';
-
-const LOGOUT_TIMEOUT = 7000;
 
 @Component({
   selector: 'app-root',
@@ -35,7 +33,20 @@ export class AppComponent {
   onUserAction() {
     if (this.logoutId) {
       clearTimeout(this.logoutId);
-      this.startLogoutTimer();
+      fetch(SERVER_URL + '/api/Token/RefreshTokenTime', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json;charset=utf-8',
+        },
+      })
+        .then((res) => res.json())
+        .then((data: IResponse) => {
+          const token = jwtDecode(data.token);
+
+          this.time = token.exp || -1;
+          this.startLogoutTimer();
+        })
+        .catch(console.error);
     }
   }
 

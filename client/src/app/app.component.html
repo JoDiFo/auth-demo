@@ -1,5 +1,8 @@
 <app-product-form (onAction)="onUserAction()"></app-product-form>
-<app-auth-form *ngIf="!user" (submitUser)="handleSubmitUser($event)"></app-auth-form>
+<app-auth-form
+  *ngIf="!user"
+  (submitUser)="handleSubmitUser($event)"
+></app-auth-form>
 <app-profile-popup
   [user]="user"
   (onLogout)="handleLogout()"
