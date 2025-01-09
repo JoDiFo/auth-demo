@@ -1,5 +1,5 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { IResponse, IUser } from '../types';
+import { IResponse, IUser, TFormMode } from '../types';
 import { SERVER_URL } from '../constants';
 import { jwtDecode } from 'jwt-decode';
 
@@ -13,6 +13,8 @@ export class AuthFormComponent implements OnInit {
   password: string = '';
 
   isLoading: boolean = false;
+
+  mode: TFormMode = "signup"
 
   @Output() submitUser = new EventEmitter();
 
@@ -90,6 +92,10 @@ export class AuthFormComponent implements OnInit {
       .finally(() => {
         this.isLoading = false;
       });
+  }
+
+  handleSwitch(mode: TFormMode) {
+    this.mode = mode
   }
 
   constructor() {}

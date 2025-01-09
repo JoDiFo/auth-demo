@@ -8,3 +8,5 @@ export interface IUser {
 export interface IResponse {
   token: string
 }
+
+export type TFormMode = "signin" | "signup"

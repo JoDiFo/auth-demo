@@ -4,10 +4,29 @@ div.form-wrapper {
   position: relative;
   z-index: 2;
   background-color: #fff;
+  border-radius: 20px;
+  padding: 20px 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+div.form-wrapper h2 {
+  text-align: center;
+}
+
+div.form-wrapper > button {
+  background-color: transparent;
+  border: none;
+  text-decoration: underline;
+}
+
+div.form-wrapper button:hover {
+  cursor: pointer;
 }
 
 div.background {
-  content: '';
+  content: "";
   position: fixed;
   inset: 0;
   background-color: #00000094;
