@@ -2,8 +2,6 @@ import { Component } from '@angular/core';
 import { ProductFormComponent } from './product-form/product-form.component';
 import { AuthFormComponent } from './auth-form/auth-form.component';
 import { ProfilePopupComponent } from './profile-popup/profile-popup.component';
-import { IResponse, IUser } from './types';
-import { jwtDecode, JwtPayload } from 'jwt-decode';
 import { SERVER_URL } from './constants';
 
 @Component({
