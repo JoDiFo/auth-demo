@@ -1,10 +1,10 @@
 <app-product-form (onAction)="onUserAction()"></app-product-form>
 <app-auth-form
-  *ngIf="!user"
+  *ngIf="!token"
   (submitUser)="handleSubmitUser($event)"
 ></app-auth-form>
 <app-profile-popup
-  [user]="user"
+  [token]="token"
   (onLogout)="handleLogout()"
 ></app-profile-popup>
 

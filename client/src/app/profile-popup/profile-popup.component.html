@@ -1,20 +1,25 @@
-<div *ngIf="user" class="wrapper">
+<div *ngIf="token && !loading" class="wrapper">
   <div>
     <h2>Profile</h2>
   </div>
 
   <div>
     <p>username</p>
-    <p>{{ user.name }}</p>
+    <p>{{ username }}</p>
   </div>
 
   <div>
-    <p>password</p>
-    <p>{{ user.password }}</p>
+    <p>password hash</p>
+    <p>{{ passwordHash }}</p>
   </div>
 
   <button (click)="handleClick()">Logout</button>
 </div>
-<div *ngIf="!user" class="wrapper">
+
+<div *ngIf="!loading" class="wrapper">
+  <h2>Loading</h2>
+</div>
+
+<div *ngIf="!token" class="wrapper">
   <h2>You are logged out</h2>
 </div>
