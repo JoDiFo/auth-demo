@@ -14,7 +14,7 @@ export class AuthFormComponent implements OnInit {
 
   isLoading: boolean = false;
 
-  mode: TFormMode = "signup"
+  mode: TFormMode = 'signup';
 
   @Output() submitUser = new EventEmitter();
 
@@ -23,7 +23,7 @@ export class AuthFormComponent implements OnInit {
       return;
     }
 
-    const user: Omit<IUser, 'id'> = {
+    const user: IUser = {
       name: this.username,
       password: this.password,
     };
@@ -42,9 +42,7 @@ export class AuthFormComponent implements OnInit {
     })
       .then((res) => res.json())
       .then((data: IResponse) => {
-        console.log(data);
-
-        this.submitUser.emit({ user, ...data });
+        this.submitUser.emit(data.access);
       })
       .catch(console.error)
       .finally(() => {
@@ -57,7 +55,7 @@ export class AuthFormComponent implements OnInit {
       return;
     }
 
-    const user: Omit<IUser, 'id'> = {
+    const user: IUser = {
       name: this.username,
       password: this.password,
     };
@@ -76,10 +74,7 @@ export class AuthFormComponent implements OnInit {
     })
       .then((res) => res.json())
       .then((data: IResponse) => {
-        console.log(data);
-
         const token = jwtDecode(data.access);
-        console.log('token', token);
 
         this.submitUser.emit({ token, user });
       })
@@ -90,7 +85,7 @@ export class AuthFormComponent implements OnInit {
   }
 
   handleSwitch(mode: TFormMode) {
-    this.mode = mode
+    this.mode = mode;
   }
 
   constructor() {}
