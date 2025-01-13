@@ -14,59 +14,56 @@ import { SERVER_URL } from './constants';
 })
 export class AppComponent {
   user: IUser | null = null;
-  logoutId: any | null = null;
-  time: number = -1;
+  refresh: string = '';
 
   handleLogout() {
     this.user = null;
-    this.time = -1;
   }
 
-  handleSubmitUser(data: { token: JwtPayload; user: IUser }) {
+  handleSubmitUser(data: { access: JwtPayload; refresh: string; user: IUser }) {
     this.user = data.user;
-
-    this.time = data.token.exp || -1;
-
-    this.startLogoutTimer();
+    this.refresh = data.refresh;
   }
 
   onUserAction() {
-    if (this.logoutId) {
-      clearTimeout(this.logoutId);
-      fetch(SERVER_URL + '/api/Token/RefreshTokenTime', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json;charset=utf-8',
-        },
-      })
-        .then((res) => res.json())
-        .then((data: IResponse) => {
-          const token = jwtDecode(data.token);
-
-          this.time = token.exp || -1;
-          this.startLogoutTimer();
-        })
-        .catch(console.error);
-    }
-  }
-
-  startLogoutTimer() {
-    const timeout = this.time * 1000 - Date.now();
-
-    this.logoutId = setTimeout(() => {
-      fetch(SERVER_URL + '/api/Auth/Logout', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json;charset=utf-8',
-        },
-      })
-        .then((res) => {
-          this.handleLogout();
-          console.log('logout');
-          return res.json();
-        })
-        .then(console.log)
-        .catch(console.error);
-    }, timeout);
+    fetch(SERVER_URL + '/api/Token/CheckTokenTime')
+      .then((res) => res.json())
+      .then(
+        (data: { expiration: string; timeRemainingMilliSeconds: number }) => {
+          if (data.timeRemainingMilliSeconds <= 0) {
+            fetch(SERVER_URL + '/api/Auth/Logout', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json;charset=utf-8',
+              },
+            })
+              .then((res) => {
+                this.handleLogout();
+                console.log('logout');
+                return res.json();
+              })
+              .then(console.log)
+              .catch(console.error);
+          } else {
+            fetch(
+              SERVER_URL +
+                '/api/Token/RefreshTokenTime' +
+                `?refreshToken=${this.refresh}`,
+              {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json;charset=utf-8',
+                },
+              }
+            )
+              .then((res) => res.json())
+              .then((data: IResponse) => {
+                this.refresh = data.refresh;
+              })
+              .catch(console.error);
+          }
+        }
+      )
+      .catch(console.error);
   }
 }

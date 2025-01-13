@@ -34,7 +34,7 @@ export class AuthFormComponent implements OnInit {
 
     this.isLoading = true;
 
-    fetch(SERVER_URL + '/api/Auth/Login', {
+    fetch(SERVER_URL + '/api/Auth/LoginByPassword', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json;charset=utf-8',
@@ -45,10 +45,7 @@ export class AuthFormComponent implements OnInit {
       .then((data: IResponse) => {
         console.log(data);
 
-        const token = jwtDecode(data.token);
-        console.log('token', token);
-
-        this.submitUser.emit({ token, user });
+        this.submitUser.emit({ user, ...data });
       })
       .catch(console.error)
       .finally(() => {
@@ -83,7 +80,7 @@ export class AuthFormComponent implements OnInit {
       .then((data: IResponse) => {
         console.log(data);
 
-        const token = jwtDecode(data.token);
+        const token = jwtDecode(data.access);
         console.log('token', token);
 
         this.submitUser.emit({ token, user });

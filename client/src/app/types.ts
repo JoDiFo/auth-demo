@@ -6,7 +6,8 @@ export interface IUser {
 }
 
 export interface IResponse {
-  token: string
+  access: string;
+  refresh: string;
 }
 
-export type TFormMode = "signin" | "signup"
+export type TFormMode = 'signin' | 'signup';
