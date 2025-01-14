@@ -3,6 +3,11 @@ export interface IUser {
   password: string;
 }
 
+export interface IUserData {
+  username: string;
+  passwordHash: string;
+}
+
 export interface IResponse {
   access: string;
 }

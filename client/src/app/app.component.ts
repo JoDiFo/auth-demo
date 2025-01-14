@@ -3,6 +3,7 @@ import { ProductFormComponent } from './product-form/product-form.component';
 import { AuthFormComponent } from './auth-form/auth-form.component';
 import { ProfilePopupComponent } from './profile-popup/profile-popup.component';
 import { SERVER_URL } from './constants';
+import { IResponse } from './types';
 
 @Component({
   selector: 'app-root',
@@ -22,7 +23,7 @@ export class AppComponent {
   }
 
   onUserAction() {
-    fetch(SERVER_URL + '/api/Token/CheckTokenTime')
+    fetch(SERVER_URL + '/api/Token/CheckTokenTime' + `?token=${this.token}`)
       .then((res) => res.json())
       .then((data: { timeRemaining: number }) => {
         if (data.timeRemaining <= 0) {
@@ -32,7 +33,24 @@ export class AppComponent {
               'Content-Type': 'application/json;charset=utf-8',
             },
           })
-            .then(() => this.handleLogout())
+            .then(() => {
+              this.token = null;
+            })
+            .catch(console.error);
+        } else {
+          fetch(
+            SERVER_URL + '/api/Token/RefreshTokenTime' + `?token=${this.token}`,
+            {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json;charset=utf-8',
+              },
+            }
+          )
+            .then((res) => res.json())
+            .then((data: { token: string }) => {
+              this.token = data.token;
+            })
             .catch(console.error);
         }
       })
