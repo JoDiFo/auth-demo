@@ -12,13 +12,30 @@ export class AuthFormComponent implements OnInit {
   username: string = '';
   password: string = '';
 
+  usernameError: string = '';
+
   isLoading: boolean = false;
 
   mode: TFormMode = 'signup';
 
   @Output() submitUser = new EventEmitter();
 
+  handleUsernameChange(username: string) {
+    const matchedSymbols = username.match(/([^A-Za-z0-9])/g);
+
+    if (matchedSymbols) {
+      this.usernameError = `You can not use this symbol ${matchedSymbols}`;
+    } else {
+      this.usernameError = '';
+      this.username = username;
+    }
+  }
+
   handleLogin() {
+    if (this.usernameError) {
+      return;
+    }
+
     if (!this.username || !this.password) {
       return;
     }
@@ -51,6 +68,10 @@ export class AuthFormComponent implements OnInit {
   }
 
   handleRegister() {
+    if (this.usernameError) {
+      return;
+    }
+
     if (!this.username || !this.password) {
       return;
     }

@@ -2,11 +2,23 @@
   <div *ngIf="mode === 'signin'" class="form-wrapper">
     <h2>Sign in</h2>
     <form action="" *ngIf="!isLoading" (ngSubmit)="handleLogin()">
-      <label for="username">username</label>
-      <input id="username" name="username" type="text" [(ngModel)]="username" />
+      <div class="input-wrapper">
+        <label for="username">username</label>
+        <input
+          id="username"
+          name="username"
+          type="text"
+          [ngClass]="usernameError && 'error'"
+          [ngModel]="username"
+          (ngModelChange)="handleUsernameChange($event)"
+        />
+        <span class="error-message" *ngIf="usernameError">{{ usernameError }}</span>
+      </div>
 
-      <label for="password">password</label>
-      <input id="" name="password" type="text" [(ngModel)]="password" />
+      <div class="input-wrapper">
+        <label for="password">password</label>
+        <input id="" name="password" type="text" [(ngModel)]="password" />
+      </div>
 
       <div class="button-wrapper">
         <button type="reset">Clear</button>
@@ -22,11 +34,23 @@
   <div *ngIf="mode === 'signup'" class="form-wrapper">
     <h2>Sign up</h2>
     <form action="" *ngIf="!isLoading" (ngSubmit)="handleRegister()">
-      <label for="username">username</label>
-      <input id="username" name="username" type="text" [(ngModel)]="username" />
+      <div class="input-wrapper">
+        <label for="username">username</label>
+        <input
+          id="username"
+          name="username"
+          type="text"
+          [ngClass]="usernameError && 'error'"
+          [ngModel]="username"
+          (ngModelChange)="handleUsernameChange($event)"
+        />
+        <span class="error-message" *ngIf="usernameError">{{ usernameError }}</span>
+      </div>
 
-      <label for="password">password</label>
-      <input id="" name="password" type="text" [(ngModel)]="password" />
+      <div class="input-wrapper">
+        <label for="password">password</label>
+        <input id="" name="password" type="text" [(ngModel)]="password" />
+      </div>
 
       <div class="button-wrapper">
         <button type="reset">Clear</button>
