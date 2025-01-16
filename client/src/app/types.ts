@@ -9,7 +9,7 @@ export interface IUserData {
 }
 
 export interface IResponse {
-  access: string;
+  token: string;
 }
 
 export interface IRefreshTime {

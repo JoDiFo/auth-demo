@@ -59,7 +59,7 @@ export class AuthFormComponent implements OnInit {
     })
       .then((res) => res.json())
       .then((data: IResponse) => {
-        this.submitUser.emit(data.access);
+        this.submitUser.emit(data.token);
       })
       .catch(console.error)
       .finally(() => {
@@ -95,7 +95,7 @@ export class AuthFormComponent implements OnInit {
     })
       .then((res) => res.json())
       .then((data: IResponse) => {
-        const token = jwtDecode(data.access);
+        const token = jwtDecode(data.token);
 
         this.submitUser.emit({ token, user });
       })
