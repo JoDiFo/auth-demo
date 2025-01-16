@@ -6,8 +6,8 @@
       id="productName"
       name="productName"
       type="text"
-      [(ngModel)]="productName"
-      (ngModelChange)="emitAction()"
+      [ngModel]="productName"
+      (ngModelChange)="handleNameChange($event)"
     />
 
     <label for="productPrice">Product price</label>
@@ -15,16 +15,16 @@
       id="productPrice"
       name="productPrice"
       type="text"
-      [(ngModel)]="productPrice"
-      (ngModelChange)="emitAction()"
+      [ngModel]="productPrice"
+      (ngModelChange)="handlePriceChange($event)"
     />
 
     <label for="productType">Product type</label>
     <select
       name="productType"
       id="productType"
-      [(ngModel)]="productType"
-      (ngModelChange)="emitAction()"
+      [ngModel]="productType"
+      (ngModelChange)="handleTypeChange($event)"
     >
       <option value="toy">Toy</option>
       <option value="weapon">Weapon</option>
@@ -35,8 +35,8 @@
     <textarea
       id="productDescription"
       name="productDescription"
-      [(ngModel)]="productDescription"
-      (ngModelChange)="emitAction()"
+      [ngModel]="productDescription"
+      (ngModelChange)="handleDescriptionChange($event)"
     ></textarea>
 
     <div class="button-wrapper">

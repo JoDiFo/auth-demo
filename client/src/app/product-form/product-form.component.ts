@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-product-form',
@@ -11,10 +11,40 @@ export class ProductFormComponent implements OnInit {
   productType: string = '';
   productDescription: string = '';
 
-  @Output() onAction = new EventEmitter()
+  @Input() token!: string | null;
 
-  emitAction() {
-    this.onAction.emit()
+  @Output() onAction = new EventEmitter();
+
+  handleNameChange(value: string) {
+    if (!this.token) return;
+
+    this.productName = value;
+
+    this.onAction.emit();
+  }
+
+  handlePriceChange(value: string) {
+    if (!this.token) return;
+
+    this.productName = value;
+
+    this.onAction.emit();
+  }
+
+  handleTypeChange(value: string) {
+    if (!this.token) return;
+
+    this.productName = value;
+
+    this.onAction.emit();
+  }
+
+  handleDescriptionChange(value: string) {
+    if (!this.token) return;
+
+    this.productName = value;
+
+    this.onAction.emit();
   }
 
   constructor() {}

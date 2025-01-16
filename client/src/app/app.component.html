@@ -1,4 +1,4 @@
-<app-product-form (onAction)="onUserAction()"></app-product-form>
+<app-product-form [token]="token" (onAction)="onUserAction()"></app-product-form>
 <app-auth-form
   *ngIf="!token"
   (submitUser)="handleSubmitUser($event)"
