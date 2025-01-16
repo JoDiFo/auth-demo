@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 import { ProductFormComponent } from './product-form/product-form.component';
 import { AuthFormComponent } from './auth-form/auth-form.component';
 import { ProfilePopupComponent } from './profile-popup/profile-popup.component';
-import { SERVER_URL } from './constants';
-import { IResponse } from './types';
+import { ESeverEndpoints, SERVER_URL } from './constants';
+import { IRefreshTime } from './types';
 
 @Component({
   selector: 'app-root',
@@ -23,11 +23,13 @@ export class AppComponent {
   }
 
   onUserAction() {
-    fetch(SERVER_URL + '/api/Token/CheckTokenTime' + `?token=${this.token}`)
+    fetch(
+      `${SERVER_URL}${ESeverEndpoints.CHECK_TOKEN_TIME}?token=${this.token}`
+    )
       .then((res) => res.json())
-      .then((data: { timeRemaining: number }) => {
+      .then((data: IRefreshTime) => {
         if (data.timeRemaining <= 0) {
-          fetch(SERVER_URL + '/api/Auth/Logout', {
+          fetch(SERVER_URL + ESeverEndpoints.LOGOUT, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json;charset=utf-8',
@@ -39,7 +41,7 @@ export class AppComponent {
             .catch(console.error);
         } else {
           fetch(
-            SERVER_URL + '/api/Token/RefreshTokenTime' + `?token=${this.token}`,
+            `${SERVER_URL}${ESeverEndpoints.REFRESH_TOKEN_TIME}?token=${this.token}`,
             {
               method: 'POST',
               headers: {

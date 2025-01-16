@@ -7,8 +7,8 @@ import {
   OnChanges,
   SimpleChanges,
 } from '@angular/core';
-import { IUser, IUserData } from '../types';
-import { SERVER_URL } from '../constants';
+import { IUserData } from '../types';
+import { ESeverEndpoints, SERVER_URL } from '../constants';
 
 @Component({
   selector: 'app-profile-popup',
@@ -26,7 +26,7 @@ export class ProfilePopupComponent implements OnInit, OnChanges {
   @Output() onLogout = new EventEmitter();
 
   handleClick() {
-    fetch(SERVER_URL + '/api/Auth/Logout', {
+    fetch(`${SERVER_URL}${ESeverEndpoints.LOGOUT}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json;charset=utf-8',
@@ -42,7 +42,7 @@ export class ProfilePopupComponent implements OnInit, OnChanges {
     if (this.token) {
       this.loading = true;
 
-      fetch(SERVER_URL + '/api/Token/GetUserData' + `?token=${this.token}`)
+      fetch(`${SERVER_URL}${ESeverEndpoints.GET_USER_DATA}?token=${this.token}`)
         .then((res) => res.json())
         .then((data: IUserData) => {
           this.username = data.username;
@@ -59,12 +59,15 @@ export class ProfilePopupComponent implements OnInit, OnChanges {
     this.loading = true;
 
     if (this.token) {
-      fetch(SERVER_URL + '/api/Token/GetUserData' + `?token=${this.token}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json;charset=utf-8',
-        },
-      })
+      fetch(
+        `${SERVER_URL}${ESeverEndpoints.GET_USER_DATA}?token=${this.token}`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json;charset=utf-8',
+          },
+        }
+      )
         .then((res) => res.json())
         .then((data: IUserData) => {
           this.username = data.username;

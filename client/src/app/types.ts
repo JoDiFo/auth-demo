@@ -12,4 +12,8 @@ export interface IResponse {
   access: string;
 }
 
+export interface IRefreshTime {
+  timeRemaining: number;
+}
+
 export type TFormMode = 'signin' | 'signup';

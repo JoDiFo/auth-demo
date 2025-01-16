@@ -1,6 +1,6 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { IResponse, IUser, TFormMode } from '../types';
-import { SERVER_URL } from '../constants';
+import { ESeverEndpoints, SERVER_URL } from '../constants';
 import { jwtDecode } from 'jwt-decode';
 
 @Component({
@@ -33,7 +33,7 @@ export class AuthFormComponent implements OnInit {
 
     this.isLoading = true;
 
-    fetch(SERVER_URL + '/api/Auth/LoginByPassword', {
+    fetch(`${SERVER_URL}${ESeverEndpoints.LOGIN}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json;charset=utf-8',
@@ -65,7 +65,7 @@ export class AuthFormComponent implements OnInit {
 
     this.isLoading = true;
 
-    fetch(SERVER_URL + '/api/Registration/Registration', {
+    fetch(`${SERVER_URL}${ESeverEndpoints.REGISTER}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json;charset=utf-8',
