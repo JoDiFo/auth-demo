@@ -2,17 +2,24 @@ import { Component } from '@angular/core';
 import { ProductFormComponent } from './product-form/product-form.component';
 import { AuthFormComponent } from './auth-form/auth-form.component';
 import { ProfilePopupComponent } from './profile-popup/profile-popup.component';
-import { ESeverEndpoints, SERVER_URL } from './constants';
 import { IRefreshTime } from './types';
+import { DataFetchService } from './services/DataFetchService';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
-  providers: [ProductFormComponent, AuthFormComponent, ProfilePopupComponent],
+  providers: [
+    ProductFormComponent,
+    AuthFormComponent,
+    ProfilePopupComponent,
+    DataFetchService,
+  ],
 })
 export class AppComponent {
   token: string | null = null;
+
+  constructor(protected dataFetchService: DataFetchService) {}
 
   handleLogout() {
     this.token = null;
@@ -23,32 +30,24 @@ export class AppComponent {
   }
 
   onUserAction() {
-    fetch(
-      `${SERVER_URL}${ESeverEndpoints.CHECK_TOKEN_TIME}?token=${this.token}`
-    )
+    if (!this.token) return;
+
+    this.dataFetchService
+      .checkTokenTime(this.token)
       .then((res) => res.json())
       .then((data: IRefreshTime) => {
         if (data.timeRemaining <= 0) {
-          fetch(SERVER_URL + ESeverEndpoints.LOGOUT, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json;charset=utf-8',
-            },
-          })
+          this.dataFetchService
+            .logout()
             .then(() => {
               this.token = null;
             })
             .catch(console.error);
         } else {
-          fetch(
-            `${SERVER_URL}${ESeverEndpoints.REFRESH_TOKEN_TIME}?token=${this.token}`,
-            {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json;charset=utf-8',
-              },
-            }
-          )
+          if (!this.token) return;
+
+          this.dataFetchService
+            .refreshToken(this.token)
             .then((res) => res.json())
             .then((data: { token: string }) => {
               this.token = data.token;
