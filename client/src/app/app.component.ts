@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { ProductFormComponent } from './product-form/product-form.component';
 import { AuthFormComponent } from './auth-form/auth-form.component';
 import { ProfilePopupComponent } from './profile-popup/profile-popup.component';
-import { IRefreshTime } from './types';
+import { IRefreshTime, IResponse } from './types';
 import { DataFetchService } from './services/DataFetchService';
 
 @Component({
@@ -49,7 +49,7 @@ export class AppComponent {
           this.dataFetchService
             .refreshToken(this.token)
             .then((res) => res.json())
-            .then((data: { token: string }) => {
+            .then((data: IResponse) => {
               this.token = data.token;
             })
             .catch(console.error);
