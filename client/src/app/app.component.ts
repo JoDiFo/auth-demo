@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 import { ProductFormComponent } from './product-form/product-form.component';
 import { AuthFormComponent } from './auth-form/auth-form.component';
 import { ProfilePopupComponent } from './profile-popup/profile-popup.component';
-import { IRefreshTime, IResponse } from './types';
 import { DataFetchService } from './services/DataFetchService';
+import { TokenService } from './services/TokenService';
 
 @Component({
   selector: 'app-root',
@@ -14,12 +14,16 @@ import { DataFetchService } from './services/DataFetchService';
     AuthFormComponent,
     ProfilePopupComponent,
     DataFetchService,
+    TokenService,
   ],
 })
 export class AppComponent {
   token: string | null = null;
 
-  constructor(protected dataFetchService: DataFetchService) {}
+  constructor(
+    protected dataFetchService: DataFetchService,
+    protected tokenService: TokenService
+  ) {}
 
   handleLogout() {
     this.token = null;
@@ -30,31 +34,15 @@ export class AppComponent {
   }
 
   onUserAction() {
-    if (!this.token) return;
-
-    this.dataFetchService
-      .checkTokenTime(this.token)
-      .then((res) => res.json())
-      .then((data: IRefreshTime) => {
-        if (data.timeRemaining <= 0) {
-          this.dataFetchService
-            .logout()
-            .then(() => {
-              this.token = null;
-            })
-            .catch(console.error);
-        } else {
-          if (!this.token) return;
-
-          this.dataFetchService
-            .refreshToken(this.token)
-            .then((res) => res.json())
-            .then((data: IResponse) => {
-              this.token = data.token;
-            })
-            .catch(console.error);
-        }
-      })
-      .catch(console.error);
+    this.tokenService.isTokenValid(this.token).then((isValid) => {
+      if (isValid) {
+        this.tokenService.getRefreshedToken(this.token).then((data) => {
+          this.token = data ? data.token : null;
+        });
+      } else {
+        this.dataFetchService.logout();
+        this.token = null;
+      }
+    });
   }
 }
