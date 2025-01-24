@@ -44,7 +44,7 @@ export class AuthFormComponent implements OnInit {
     }
 
     const user: IUser = {
-      name: this.username,
+      username: this.username,
       password: this.password,
     };
 
@@ -75,7 +75,7 @@ export class AuthFormComponent implements OnInit {
     }
 
     const user: IUser = {
-      name: this.username,
+      username: this.username,
       password: this.password,
     };
 
