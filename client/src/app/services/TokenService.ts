@@ -8,23 +8,18 @@ class TokenService {
     this.dataFetchService = new DataFetchService();
   }
 
-  public async getRefreshedToken(
-    token: string | null
-  ): Promise<IResponse | null> {
-    if (!token) return null;
-
+  public async getRefreshedToken(token: string): Promise<string | null> {
     try {
       const res = await this.dataFetchService.refreshToken(token);
-      return await res.json();
+      const data: IResponse = await res.json();
+      return data.token;
     } catch (err) {
       console.error(err);
       return null;
     }
   }
 
-  public async isTokenValid(token: string | null): Promise<boolean> {
-    if (!token) return false;
-
+  public async isTokenValid(token: string): Promise<boolean> {
     try {
       const res = await this.dataFetchService.checkTokenTime(token);
       const data: IRefreshTime = await res.json();

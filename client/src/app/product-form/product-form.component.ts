@@ -26,7 +26,7 @@ export class ProductFormComponent implements OnInit {
   handlePriceChange(value: string) {
     if (!this.token) return;
 
-    this.productName = value;
+    this.productPrice = value;
 
     this.onAction.emit();
   }
@@ -34,7 +34,7 @@ export class ProductFormComponent implements OnInit {
   handleTypeChange(value: string) {
     if (!this.token) return;
 
-    this.productName = value;
+    this.productType = value;
 
     this.onAction.emit();
   }
@@ -42,7 +42,7 @@ export class ProductFormComponent implements OnInit {
   handleDescriptionChange(value: string) {
     if (!this.token) return;
 
-    this.productName = value;
+    this.productDescription = value;
 
     this.onAction.emit();
   }

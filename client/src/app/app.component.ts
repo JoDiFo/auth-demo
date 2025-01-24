@@ -4,6 +4,8 @@ import { AuthFormComponent } from './auth-form/auth-form.component';
 import { ProfilePopupComponent } from './profile-popup/profile-popup.component';
 import { DataFetchService } from './services/DataFetchService';
 import { TokenService } from './services/TokenService';
+import { LocalStorageService } from './services/LocalStorageService';
+import { UpdateBase } from './update-base/update-base.component';
 
 @Component({
   selector: 'app-root',
@@ -15,34 +17,28 @@ import { TokenService } from './services/TokenService';
     ProfilePopupComponent,
     DataFetchService,
     TokenService,
+    LocalStorageService,
   ],
 })
-export class AppComponent {
-  token: string | null = null;
+export class AppComponent extends UpdateBase {
+  token: string | null;
 
   constructor(
     protected dataFetchService: DataFetchService,
-    protected tokenService: TokenService
-  ) {}
+    protected tokenService: TokenService,
+    protected localStorageService: LocalStorageService
+  ) {
+    super(dataFetchService, tokenService, localStorageService);
+    this.token = localStorageService.getToken();
+  }
 
   handleLogout() {
     this.token = null;
+    this.localStorageService.deleteToken();
   }
 
   handleSubmitUser(token: string) {
     this.token = token;
-  }
-
-  onUserAction() {
-    this.tokenService.isTokenValid(this.token).then((isValid) => {
-      if (isValid) {
-        this.tokenService.getRefreshedToken(this.token).then((data) => {
-          this.token = data ? data.token : null;
-        });
-      } else {
-        this.dataFetchService.logout();
-        this.token = null;
-      }
-    });
+    this.localStorageService.setToken(token);
   }
 }
