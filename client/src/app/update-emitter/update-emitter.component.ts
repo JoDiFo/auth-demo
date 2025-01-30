@@ -1,35 +1,21 @@
-import {
-  Component,
-  DoCheck,
-  EventEmitter,
-  OnChanges,
-  OnInit,
-  Output,
-  SimpleChanges,
-} from '@angular/core';
-import { of } from 'rxjs';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { fromEvent } from 'rxjs';
+import { debounceTime, tap } from 'rxjs/operators';
 
 @Component({
   templateUrl: './update-emitter.component.html',
 })
-export class UpdateEmitter implements OnInit, OnChanges, DoCheck {
+export class UpdateEmitter implements OnInit {
   @Output() onAction = new EventEmitter();
-
-  handleUserAction() {
-    this.onAction.emit();
-  }
 
   constructor() {}
 
   ngOnInit(): void {
-    of(Object.keys(this)).forEach((property) => property);
-  }
-
-  ngOnChanges(changes: SimpleChanges): void {
-    console.log('changes', changes);
-  }
-
-  ngDoCheck(): void {
-    Object.keys(this).map(console.log);
+    fromEvent(document, 'keyup')
+      .pipe(
+        debounceTime(300),
+        tap(() => this.onAction.emit())
+      )
+      .subscribe(() => {});
   }
 }
