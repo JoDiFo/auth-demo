@@ -7,8 +7,7 @@ import {
   OnChanges,
   SimpleChanges,
 } from '@angular/core';
-import { IUserData } from '../types';
-import { DataFetchService } from '../services/DataFetchService';
+import { DataFetchService, IUserData } from 'auth-lib';
 
 @Component({
   selector: 'app-profile-popup',

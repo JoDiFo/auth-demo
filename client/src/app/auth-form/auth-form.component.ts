@@ -1,7 +1,6 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { IResponse, IUser, TFormMode } from '../types';
 import { jwtDecode } from 'jwt-decode';
-import { DataFetchService } from '../services/DataFetchService';
+import { DataFetchService, TFormMode, IUser, IResponse } from 'auth-lib';
 
 @Component({
   selector: 'app-auth-form',
