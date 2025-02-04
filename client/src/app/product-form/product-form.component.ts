@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
 import { UpdateEmitter } from 'auth-lib';
 
 @Component({
@@ -11,8 +11,6 @@ export class ProductFormComponent extends UpdateEmitter {
   productPrice: string = '';
   productType: string = '';
   productDescription: string = '';
-
-  @Input() token!: string | null;
 
   constructor() {
     super();
