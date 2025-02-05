@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { UpdateEmitter } from '../update-emitter/update-emitter.component';
+import { UpdateEmitter } from 'auth-lib';
 
 @Component({
   selector: 'app-product-form',

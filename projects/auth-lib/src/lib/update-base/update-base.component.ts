@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
-import { DataFetchService } from '../services/DataFetchService';
-import { TokenService } from '../services/TokenService';
-import { LocalStorageService } from '../services/LocalStorageService';
+import {
+  DataFetchService,
+  TokenService,
+  LocalStorageService,
+} from '../services';
 
 @Component({
   selector: 'update-base',

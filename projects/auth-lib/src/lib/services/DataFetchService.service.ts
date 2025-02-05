@@ -2,7 +2,9 @@ import { Injectable } from '@angular/core';
 import { ESeverEndpoints, SERVER_URL } from '../constants';
 import { IUser } from '../types';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 class DataFetchService {
   async register(user: IUser) {
     return fetch(`${SERVER_URL}${ESeverEndpoints.REGISTER}`, {

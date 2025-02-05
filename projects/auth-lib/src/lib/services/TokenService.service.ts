@@ -1,6 +1,10 @@
+import { Injectable } from '@angular/core';
 import { IRefreshTime, IResponse } from '../types';
-import { DataFetchService } from './DataFetchService';
+import { DataFetchService } from './DataFetchService.service';
 
+@Injectable({
+  providedIn: 'root',
+})
 class TokenService {
   dataFetchService: DataFetchService;
 
