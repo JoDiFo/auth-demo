@@ -1,6 +1,5 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { IResponse, IUser, TFormMode } from '../types';
-import { jwtDecode } from 'jwt-decode';
 import { DataFetchService } from '../services/DataFetchService.service';
 
 @Component({
@@ -88,9 +87,7 @@ export class AuthFormComponent implements OnInit {
       .register(user)
       .then((res) => res.json())
       .then((data: IResponse) => {
-        const token = jwtDecode(data.token);
-
-        this.submitUser.emit({ token, user });
+        this.submitUser.emit(data.token);
       })
       .catch(console.error)
       .finally(() => {
