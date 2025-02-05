@@ -1,5 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { fromEvent } from 'rxjs';
+import { fromEvent, merge } from 'rxjs';
 import { debounceTime, tap } from 'rxjs/operators';
 
 @Component({
@@ -11,7 +11,7 @@ export class UpdateEmitter implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
-    fromEvent(document, 'keyup')
+    merge(fromEvent(document, 'keyup'), fromEvent(document, 'change'))
       .pipe(
         debounceTime(300),
         tap(() => this.onAction.emit())
