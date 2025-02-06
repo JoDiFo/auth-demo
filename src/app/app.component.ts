@@ -23,15 +23,12 @@ import {
   ],
 })
 export class AppComponent extends UpdateBase {
-  token: string | null;
-
   constructor(
     protected dataFetchService: DataFetchService,
     protected tokenService: TokenService,
     protected localStorageService: LocalStorageService
   ) {
     super(dataFetchService, tokenService, localStorageService);
-    this.token = localStorageService.getToken();
   }
 
   handleLogout() {
