@@ -1,11 +1,14 @@
 import {
   Component,
   EventEmitter,
+  Input,
   OnInit,
   Output,
   OnChanges,
+  SimpleChanges,
 } from '@angular/core';
-import { DataFetchService, IUserData, LocalStorageService } from 'auth-lib';
+import { IUserData } from '../../../projects/auth-lib/src/lib/types';
+import { DataFetchService } from 'auth-lib';
 
 @Component({
   selector: 'app-profile-popup',
@@ -15,21 +18,15 @@ import { DataFetchService, IUserData, LocalStorageService } from 'auth-lib';
 })
 export class ProfilePopupComponent implements OnInit, OnChanges {
   username: string = '';
-
   passwordHash: string = '';
 
   loading: boolean = false;
 
-  token: string | null = null;
+  @Input() token!: string | null;
 
   @Output() onLogout = new EventEmitter();
 
-  constructor(
-    protected dataFetchService: DataFetchService,
-    protected localStorageService: LocalStorageService
-  ) {
-    this.token = localStorageService.getToken();
-  }
+  constructor(protected dataFetchService: DataFetchService) {}
 
   handleClick() {
     this.dataFetchService
@@ -38,7 +35,7 @@ export class ProfilePopupComponent implements OnInit, OnChanges {
       .catch(console.error);
   }
 
-  ngOnChanges(): void {
+  ngOnChanges(changes: SimpleChanges): void {
     if (this.token) {
       this.loading = true;
 
